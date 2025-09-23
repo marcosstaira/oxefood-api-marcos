@@ -1,4 +1,4 @@
-package br.com.ifpe.oxefood.modelo.cliente;
+package br.com.ifpe.oxefood.modelo.Produto;
 
 import org.hibernate.annotations.SQLRestriction;
 

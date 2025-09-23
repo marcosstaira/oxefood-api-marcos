@@ -1,4 +1,4 @@
-package br.com.ifpe.oxefood.modelo.cliente;
+package br.com.ifpe.oxefood.modelo.Produto;
 
 import java.util.List;
 
@@ -7,26 +7,26 @@ import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
 @Service
-public class ClienteService {
+public class ProdutoService {
 
-  public List<Cliente> listarTodos() {
+  public List<Produto> listarTodos() {
   
         return repository.findAll();
     }
 
-    public Cliente obterPorID(Long id) {
+    public Produto obterPorID(Long id) {
 
         return repository.findById(id).get();
     }
 
  @Autowired
-   private ClienteRepository repository;
+   private ProdutoRepository repository;
 
    @Transactional
-   public Cliente save(Cliente cliente) {
+   public Produto save(Produto produto) {
 
-       cliente.setHabilitado(Boolean.TRUE);
-       return repository.save(cliente);
+       produto.setHabilitado(Boolean.TRUE);
+       return repository.save(produto);
    }
    
 }

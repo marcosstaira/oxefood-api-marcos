@@ -1,4 +1,4 @@
-package br.com.ifpe.oxefood.modelo.cliente;
+package br.com.ifpe.oxefood.modelo.entregador;
 
 import java.time.LocalDate;
 
@@ -16,7 +16,7 @@ import lombok.Setter;
 
 
 @Entity
-@Table(name = "Cliente")
+@Table(name = "Entregador")
 @SQLRestriction("habilitado = true")
 @Builder
 @Getter
