@@ -28,6 +28,6 @@ public abstract class EntidadeNegocio implements Serializable {
 
     @JsonIgnore
     @Column
-    @Builder.Default // Essencial para quando usar o padrão Builder
+    @Builder.Default 
     private Boolean habilitado = true;}
 
