@@ -1,4 +1,6 @@
-package br.com.ifpe.oxefood.modelo.Produto;
+package br.com.ifpe.oxefood.api.modelo.Produto;
+
+import java.math.BigDecimal;
 
 import org.hibernate.annotations.SQLRestriction;
 
@@ -31,6 +33,9 @@ public class Produto extends EntidadeAuditavel  {
 
    @Column
    private String descricao;
+
+   @Column(nullable = false)
+    private BigDecimal valorUnitario;
 
    @Column
    private int tempoEntregaMinimo;

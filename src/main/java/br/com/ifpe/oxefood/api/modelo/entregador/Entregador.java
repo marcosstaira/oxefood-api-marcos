@@ -1,4 +1,4 @@
-package br.com.ifpe.oxefood.modelo.entregador;
+package br.com.ifpe.oxefood.api.modelo.entregador;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

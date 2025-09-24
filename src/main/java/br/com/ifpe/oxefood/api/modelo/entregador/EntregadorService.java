@@ -1,4 +1,4 @@
-package br.com.ifpe.oxefood.modelo.entregador;
+package br.com.ifpe.oxefood.api.modelo.entregador;
 
 import java.util.List;
 
@@ -11,15 +11,13 @@ public class EntregadorService {
 
     private final EntregadorRepository repository;
 
-    // Injeção de dependência via construtor (prática recomendada)
     public EntregadorService(EntregadorRepository repository) {
         this.repository = repository;
     }
 
     @Transactional
     public Entregador save(Entregador entregador) {
-        // Aqui você pode adicionar regras de negócio antes de salvar
-        // Ex: validar CPF, verificar se já existe, etc.
+    
         return repository.save(entregador);
     }
 

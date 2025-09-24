@@ -14,14 +14,42 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.ifpe.oxefood.modelo.entregador.Entregador;
-import br.com.ifpe.oxefood.modelo.entregador.EntregadorService;
+import br.com.ifpe.oxefood.api.modelo.entregador.Entregador;
+import br.com.ifpe.oxefood.api.modelo.entregador.EntregadorService;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/entregador")
 @CrossOrigin
 public class EntregadorController {
+  @PersistenceContext
+    private EntityManager entityManager;
+
+    @GetMapping("/debug-raw")
+
+
+    public List<Object[]> debugRawQuery() {
+        System.out.println("--- INICIANDO BUSCA DE DEBUG RAW ---");
+        // Esta consulta ignora qualquer restrição do Hibernate (@SQLRestriction)
+        List<Object[]> results = entityManager.createNativeQuery("SELECT id, nome, habilitado FROM entregador").getResultList();
+        
+        System.out.println("Registros encontrados no banco PELA APLICAÇÃO:");
+        if (results.isEmpty()) {
+            System.out.println("NENHUM REGISTRO ENCONTRADO.");
+        } else {
+            results.forEach(record -> 
+                System.out.println("ID: " + record[0] + ", Nome: " + record[1] + ", Habilitado: " + record[2])
+            );
+        }
+        System.out.println("--- FIM DO DEBUG ---");
+        
+        return results;
+    }
+    
+
+    
 
     private final EntregadorService service;
 

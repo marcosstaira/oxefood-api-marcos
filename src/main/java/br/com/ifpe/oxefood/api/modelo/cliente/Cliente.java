@@ -1,4 +1,4 @@
-package br.com.ifpe.oxefood.modelo.cliente;
+package br.com.ifpe.oxefood.api.modelo.cliente;
 
 import java.time.LocalDate;
 

@@ -9,12 +9,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-
-
-
 
 @Getter
 @Setter
@@ -30,6 +28,6 @@ public abstract class EntidadeNegocio implements Serializable {
 
     @JsonIgnore
     @Column
-    private Boolean habilitado;
-    
-}
+    @Builder.Default // Essencial para quando usar o padrão Builder
+    private Boolean habilitado = true;}
+
