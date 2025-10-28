@@ -32,10 +32,8 @@ public class EntregadorService {
 
     @Transactional
     public Entregador update(Long id, Entregador entregadorAlterado) {
-        // Garante que o entregador com o ID especificado existe antes de tentar atualizar
         Entregador entregadorExistente = this.findById(id);
 
-        // Copia as propriedades, mas mantém o ID e os dados de auditoria
         entregadorAlterado.setId(entregadorExistente.getId());
         entregadorAlterado.setHabilitado(entregadorExistente.getHabilitado());
         entregadorAlterado.setVersao(entregadorExistente.getVersao());
@@ -46,9 +44,8 @@ public class EntregadorService {
 
     @Transactional
     public void delete(Long id) {
-        // Em vez de deletar de verdade, faremos um "soft delete"
         Entregador entregador = this.findById(id);
-        entregador.setHabilitado(false); // Apenas desabilita o entregador
+        entregador.setHabilitado(false); 
         this.save(entregador);
     }
 }

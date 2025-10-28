@@ -1,4 +1,5 @@
-package br.com.ifpe.oxefood.api.entregador;
+
+package br.com.ifpe.oxefood.api.modelo.produto;
 
 import java.util.List;
 
@@ -14,47 +15,39 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.ifpe.oxefood.api.modelo.entregador.Entregador;
-import br.com.ifpe.oxefood.api.modelo.entregador.EntregadorService;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/entregador")
+@RequestMapping("/api/produto")
 @CrossOrigin
-public class EntregadorController {
-  @PersistenceContext
-    private EntityManager entityManager;
+public class ProdutoController {
 
-    private final EntregadorService service;
+    private final ProdutoService service;
 
-    public EntregadorController(EntregadorService service) {
+    public ProdutoController(ProdutoService service) {
         this.service = service;
     }
 
     @PostMapping
-    public ResponseEntity<Entregador> save(@RequestBody @Valid EntregadorRequest request) {
-        Entregador novoEntregador = service.save(request.build());
-        return new ResponseEntity<>(novoEntregador, HttpStatus.CREATED);
+    public ResponseEntity<Produto> save(@RequestBody @Valid ProdutoRequest request) {
+        Produto produtoSalvo = service.save(request.build());
+        return new ResponseEntity<>(produtoSalvo, HttpStatus.CREATED);
     }
 
     @GetMapping
-    public List<Entregador> findAll() {
+    public List<Produto> findAll() {
         return service.findAll();
     }
 
-
-
     @GetMapping("/{id}")
-    public Entregador findById(@PathVariable Long id) {
+    public Produto findById(@PathVariable Long id) {
         return service.findById(id);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Entregador> update(@PathVariable Long id, @RequestBody @Valid EntregadorRequest request) {
-        Entregador entregadorAtualizado = service.update(id, request.build());
-        return new ResponseEntity<>(entregadorAtualizado, HttpStatus.OK);
+    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody @Valid ProdutoRequest request) {
+        service.update(id, request.build());
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")

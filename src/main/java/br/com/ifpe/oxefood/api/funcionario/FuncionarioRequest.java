@@ -1,12 +1,16 @@
-package br.com.ifpe.oxefood.api.entregador;
+package br.com.ifpe.oxefood.api.funcionario;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import br.com.ifpe.oxefood.api.modelo.entregador.Entregador;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import br.com.ifpe.oxefood.modelo.acesso.Usuario;
+import br.com.ifpe.oxefood.modelo.funcionario.Funcionario;
+import br.com.ifpe.oxefood.modelo.funcionario.TipoFuncionario;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,47 +20,61 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class EntregadorRequest {
+public class FuncionarioRequest {
 
-    @NotBlank(message = "O Nome é de preenchimento obrigatório")
-    @Size(max = 100, message = "O nome não pode ter mais que 100 caracteres")
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private TipoFuncionario tipo;
+
+    @NotBlank
+    private String email;
+
+    @NotBlank
+    private String password;
+
+
+    @NotBlank
     private String nome;
 
-    @NotBlank(message = "O CPF é de preenchimento obrigatório")
     private String cpf;
 
     private String rg;
 
-    @NotNull(message = "A data de nascimento é de preenchimento obrigatório")
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataNascimento;
 
-    @NotBlank(message = "O fone celular é de preenchimento obrigatório")
     private String foneCelular;
 
     private String foneFixo;
-    
-    private BigDecimal valorFrete;
+
+    private Double salario;
 
     private String enderecoRua;
+
     private String enderecoNumero;
+
     private String enderecoBairro;
+
     private String enderecoCidade;
+
     private String enderecoCep;
+
     private String enderecoUf;
+
     private String enderecoComplemento;
 
-    private Boolean ativo;
+    public Funcionario build() {
 
-
-    public Entregador build() {
-        return Entregador.builder()
+        return Funcionario.builder()
+                .usuario(buildUsuario())
+                .tipo(tipo)
                 .nome(nome)
                 .cpf(cpf)
                 .rg(rg)
                 .dataNascimento(dataNascimento)
                 .foneCelular(foneCelular)
                 .foneFixo(foneFixo)
-                .valorFrete(valorFrete)
+                .salario(salario)
                 .enderecoRua(enderecoRua)
                 .enderecoNumero(enderecoNumero)
                 .enderecoBairro(enderecoBairro)
@@ -64,7 +82,16 @@ public class EntregadorRequest {
                 .enderecoCep(enderecoCep)
                 .enderecoUf(enderecoUf)
                 .enderecoComplemento(enderecoComplemento)
-                .ativo(ativo)
                 .build();
     }
+
+      public Usuario buildUsuario() {
+
+        return Usuario.builder()
+                .username(email)
+                .password(password)
+                .build();
+    }
+
+
 }

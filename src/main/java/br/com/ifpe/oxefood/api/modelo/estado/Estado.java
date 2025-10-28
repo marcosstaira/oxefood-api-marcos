@@ -1,6 +1,4 @@
-package br.com.ifpe.oxefood.api.modelo.produto;
-
-import java.math.BigDecimal;
+package br.com.ifpe.oxefood.api.modelo.estado;
 
 import org.hibernate.annotations.SQLRestriction;
 
@@ -16,31 +14,20 @@ import lombok.Setter;
 
 
 @Entity
-@Table(name = "Produto")
+@Table(name = "Estado")
 @SQLRestriction("habilitado = true")
 @Builder
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Produto extends EntidadeAuditavel  {
+
+
+public class Estado extends EntidadeAuditavel  {
   
    @Column
-   private String codigo;
+   private String nome;
 
    @Column
-   private String titulo;
-
-   @Column
-   private String descricao;
-
-   @Column(nullable = false)
-    private BigDecimal valorUnitario;
-
-   @Column
-   private int tempoEntregaMinimo;
-
-   @Column
-   private int tempoEntregaMaximo;
-
+   private String sigla; 
 }

@@ -1,8 +1,7 @@
-package br.com.ifpe.oxefood.api.produto;
+package br.com.ifpe.oxefood.api.modelo.produto;
 
 import java.math.BigDecimal;
 
-import br.com.ifpe.oxefood.api.modelo.Produto.Produto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,6 +11,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+
+
 public class ProdutoRequest {
 
     private String codigo;

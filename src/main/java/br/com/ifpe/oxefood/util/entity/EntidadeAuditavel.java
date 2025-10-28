@@ -27,7 +27,7 @@ public abstract class EntidadeAuditavel extends EntidadeNegocio {
 
 
     
-    @JsonIgnore
+   @JsonIgnore
    @Version
    private Long versao;
 

@@ -1,5 +1,5 @@
 
-package br.com.ifpe.oxefood.api.produto;
+package br.com.ifpe.oxefood.api.modelo.estado;
 
 import java.util.List;
 
@@ -15,41 +15,44 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.ifpe.oxefood.api.modelo.Produto.Produto;
-import br.com.ifpe.oxefood.api.modelo.Produto.ProdutoService;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import jakarta.validation.Valid;
 
+
 @RestController
-@RequestMapping("/api/produto")
+@RequestMapping("/api/estado")
 @CrossOrigin
-public class ProdutoController {
+public class EstadoController {
+    @PersistenceContext
+    private EntityManager entityManager;
 
-    private final ProdutoService service;
+    private final EstadoService service;
 
-    public ProdutoController(ProdutoService service) {
+    public EstadoController(EstadoService service) {
         this.service = service;
     }
 
     @PostMapping
-    public ResponseEntity<Produto> save(@RequestBody @Valid ProdutoRequest request) {
-        Produto produtoSalvo = service.save(request.build());
-        return new ResponseEntity<>(produtoSalvo, HttpStatus.CREATED);
+    public ResponseEntity<Estado> save(@RequestBody @Valid EstadoRequest request) {
+        Estado novoEstado = service.save(request.build());
+        return new ResponseEntity<>(novoEstado, HttpStatus.CREATED);
     }
 
     @GetMapping
-    public List<Produto> findAll() {
+    public List<Estado> findAll() {
         return service.findAll();
     }
 
     @GetMapping("/{id}")
-    public Produto findById(@PathVariable Long id) {
+    public Estado findById(@PathVariable Long id) {
         return service.findById(id);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody @Valid ProdutoRequest request) {
-        service.update(id, request.build());
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Estado> update(@PathVariable Long id, @RequestBody @Valid EstadoRequest request) {
+        Estado estadoAtualizado = service.update(id, request.build());
+        return new ResponseEntity<>(estadoAtualizado, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
@@ -57,4 +60,5 @@ public class ProdutoController {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
+
 }

@@ -1,4 +1,4 @@
-package br.com.ifpe.oxefood.api.modelo.Produto;
+package br.com.ifpe.oxefood.api.modelo.produto;
 
 import java.util.List;
 
@@ -47,7 +47,7 @@ public class ProdutoService {
     @Transactional
     public void delete(Long id) {
         Produto produto = this.findById(id);
-        produto.setHabilitado(false); // Soft delete
+        produto.setHabilitado(false); 
         repository.save(produto);
     }
 }
