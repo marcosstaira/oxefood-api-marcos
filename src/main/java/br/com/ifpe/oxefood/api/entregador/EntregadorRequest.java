@@ -3,7 +3,7 @@ package br.com.ifpe.oxefood.api.entregador;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import br.com.ifpe.oxefood.api.modelo.entregador.Entregador;
+import br.com.ifpe.oxefood.modelo.entregador.Entregador;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

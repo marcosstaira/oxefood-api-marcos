@@ -1,4 +1,4 @@
-package br.com.ifpe.oxefood.api.entregador;
+package br.com.ifpe.oxefood.modelo.cidade;
 
 import java.util.List;
 
@@ -14,47 +14,44 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.ifpe.oxefood.modelo.entregador.Entregador;
-import br.com.ifpe.oxefood.modelo.entregador.EntregadorService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.validation.Valid;
 
+
 @RestController
-@RequestMapping("/api/entregador")
+@RequestMapping("/api/cidade")
 @CrossOrigin
-public class EntregadorController {
+public class CidadeController {
   @PersistenceContext
     private EntityManager entityManager;
 
-    private final EntregadorService service;
+    private final CidadeService service;
 
-    public EntregadorController(EntregadorService service) {
+    public CidadeController(CidadeService service) {
         this.service = service;
     }
 
     @PostMapping
-    public ResponseEntity<Entregador> save(@RequestBody @Valid EntregadorRequest request) {
-        Entregador novoEntregador = service.save(request.build());
-        return new ResponseEntity<>(novoEntregador, HttpStatus.CREATED);
+    public ResponseEntity<Cidade> save(@RequestBody @Valid CidadeRequest request) {
+        Cidade novaCidade = service.save(request.build());
+        return new ResponseEntity<>(novaCidade, HttpStatus.CREATED);
     }
 
     @GetMapping
-    public List<Entregador> findAll() {
+    public List<Cidade> findAll() {
         return service.findAll();
     }
 
-
-
     @GetMapping("/{id}")
-    public Entregador findById(@PathVariable Long id) {
+    public Cidade findById(@PathVariable Long id) {
         return service.findById(id);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Entregador> update(@PathVariable Long id, @RequestBody @Valid EntregadorRequest request) {
-        Entregador entregadorAtualizado = service.update(id, request.build());
-        return new ResponseEntity<>(entregadorAtualizado, HttpStatus.OK);
+    public ResponseEntity<Cidade> update(@PathVariable Long id, @RequestBody @Valid CidadeRequest request) {
+        Cidade cidadeAtualizada = service.update(id, request.build());
+        return new ResponseEntity<>(cidadeAtualizada, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
@@ -62,4 +59,6 @@ public class EntregadorController {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+
 }

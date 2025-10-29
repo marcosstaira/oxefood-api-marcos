@@ -1,4 +1,5 @@
-package br.com.ifpe.oxefood.api.entregador;
+
+package br.com.ifpe.oxefood.modelo.estado;
 
 import java.util.List;
 
@@ -14,47 +15,44 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.ifpe.oxefood.modelo.entregador.Entregador;
-import br.com.ifpe.oxefood.modelo.entregador.EntregadorService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.validation.Valid;
 
+
 @RestController
-@RequestMapping("/api/entregador")
+@RequestMapping("/api/estado")
 @CrossOrigin
-public class EntregadorController {
-  @PersistenceContext
+public class EstadoController {
+    @PersistenceContext
     private EntityManager entityManager;
 
-    private final EntregadorService service;
+    private final EstadoService service;
 
-    public EntregadorController(EntregadorService service) {
+    public EstadoController(EstadoService service) {
         this.service = service;
     }
 
     @PostMapping
-    public ResponseEntity<Entregador> save(@RequestBody @Valid EntregadorRequest request) {
-        Entregador novoEntregador = service.save(request.build());
-        return new ResponseEntity<>(novoEntregador, HttpStatus.CREATED);
+    public ResponseEntity<Estado> save(@RequestBody @Valid EstadoRequest request) {
+        Estado novoEstado = service.save(request.build());
+        return new ResponseEntity<>(novoEstado, HttpStatus.CREATED);
     }
 
     @GetMapping
-    public List<Entregador> findAll() {
+    public List<Estado> findAll() {
         return service.findAll();
     }
 
-
-
     @GetMapping("/{id}")
-    public Entregador findById(@PathVariable Long id) {
+    public Estado findById(@PathVariable Long id) {
         return service.findById(id);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Entregador> update(@PathVariable Long id, @RequestBody @Valid EntregadorRequest request) {
-        Entregador entregadorAtualizado = service.update(id, request.build());
-        return new ResponseEntity<>(entregadorAtualizado, HttpStatus.OK);
+    public ResponseEntity<Estado> update(@PathVariable Long id, @RequestBody @Valid EstadoRequest request) {
+        Estado estadoAtualizado = service.update(id, request.build());
+        return new ResponseEntity<>(estadoAtualizado, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
@@ -62,4 +60,5 @@ public class EntregadorController {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
+
 }
