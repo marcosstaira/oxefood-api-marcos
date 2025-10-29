@@ -1,24 +1,45 @@
-package br.com.ifpe.oxefood.modelo.estado;
+package br.com.ifpe.oxefood.modelo.estado; // <-- PACOTE CORRIGIDO
 
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import jakarta.transaction.Transactional;
+import br.com.ifpe.oxefood.api.estado.EstadoRequest; 
+
 
 @Service
 public class EstadoService {
 
-    private final EstadoRepository repository;
+    @Autowired
+    private EstadoRepository repository;
 
-    public EstadoService (EstadoRepository repository) {
-        this.repository = repository;
+    @Transactional
+    public Estado save(EstadoRequest request) { // <-- Recebe EstadoRequest
+
+        Estado estado = new Estado();
+        estado.setNome(request.getNome());
+        estado.setSigla(request.getSigla());
+       
+        return repository.save(estado);
     }
 
     @Transactional
-    public Estado save(Estado estado) {
-    
-        return repository.save(estado);
+    public Estado update(Long id, EstadoRequest request) { // <-- Recebe EstadoRequest
+
+        Estado estadoBD = this.findById(id);
+        estadoBD.setNome(request.getNome());
+        estadoBD.setSigla(request.getSigla());
+
+        return repository.save(estadoBD);
+    }
+
+    @Transactional
+    public void delete(Long id) {
+        Estado estadoBD = this.findById(id); 
+        repository.deleteById(estadoBD.getId());
     }
 
     public List<Estado> findAll() {
@@ -26,26 +47,11 @@ public class EstadoService {
     }
 
     public Estado findById(Long id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Estado não encontrado com o ID: " + id));
-    }
-
-    @Transactional
-    public Estado update(Long id, Estado estadoAlterado) {
-        Estado estadoExistente = this.findById(id);
-
-        estadoAlterado.setId(estadoExistente.getId());
-        estadoAlterado.setHabilitado(estadoExistente.getHabilitado());
-        estadoAlterado.setVersao(estadoExistente.getVersao());
-        estadoAlterado.setDataCriacao(estadoExistente.getDataCriacao());
+        Optional<Estado> estado = repository.findById(id);
         
-        return this.save(estadoAlterado);
-    }
-
-    @Transactional
-    public void delete(Long id) {
-        Estado estado = this.findById(id);
-        estado.setHabilitado(false); 
-        this.save(estado);
+        if (estado.isEmpty()) {
+            throw new RuntimeException("Estado não encontrado com o ID: " + id);
+        }
+        return estado.get();
     }
 }
