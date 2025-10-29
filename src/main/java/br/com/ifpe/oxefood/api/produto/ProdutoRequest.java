@@ -1,7 +1,6 @@
-package br.com.ifpe.oxefood.modelo.produto;
+package br.com.ifpe.oxefood.api.produto;
 
-import java.math.BigDecimal;
-
+import br.com.ifpe.oxefood.modelo.produto.Produto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,23 +10,24 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-
-
 public class ProdutoRequest {
 
+    private Long idCategoria;
+
     private String codigo;
-
+    
     private String titulo;
-
+    
     private String descricao;
-
-    private BigDecimal valorUnitario;
-
+    
+    private Double valorUnitario;
+    
     private Integer tempoEntregaMinimo;
-
+    
     private Integer tempoEntregaMaximo;
 
     public Produto build() {
+
         return Produto.builder()
                 .codigo(codigo)
                 .titulo(titulo)

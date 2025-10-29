@@ -2,52 +2,62 @@ package br.com.ifpe.oxefood.modelo.produto;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.ifpe.oxefood.util.exception.ProdutoException;
 import jakarta.transaction.Transactional;
 
 @Service
 public class ProdutoService {
-
-    private final ProdutoRepository repository;
-
-    public ProdutoService(ProdutoRepository repository) {
-        this.repository = repository;
-    }
+    
+    @Autowired
+    private ProdutoRepository repository;
 
     @Transactional
     public Produto save(Produto produto) {
+
+        if (produto.getValorUnitario() < 10) {
+
+            throw new ProdutoException(ProdutoException.MSG_VALOR_MINIMO_PRODUTO);
+        }
+
         produto.setHabilitado(Boolean.TRUE);
         return repository.save(produto);
     }
 
-    public List<Produto> findAll() {
+    public List<Produto> listarTodos() {
+  
         return repository.findAll();
     }
 
-    public Produto findById(Long id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Produto não encontrado com o ID: " + id));
+    public Produto obterPorID(Long id) {
+
+        return repository.findById(id).get();
     }
 
     @Transactional
-    public Produto update(Long id, Produto produtoAlterado) {
-        Produto produtoExistente = this.findById(id);
+    public void update(Long id, Produto produtoAlterado) {
 
-        produtoExistente.setCodigo(produtoAlterado.getCodigo());
-        produtoExistente.setTitulo(produtoAlterado.getTitulo());
-        produtoExistente.setDescricao(produtoAlterado.getDescricao());
-        produtoExistente.setValorUnitario(produtoAlterado.getValorUnitario());
-        produtoExistente.setTempoEntregaMinimo(produtoAlterado.getTempoEntregaMinimo());
-        produtoExistente.setTempoEntregaMaximo(produtoAlterado.getTempoEntregaMaximo());
-        
-        return repository.save(produtoExistente);
+        Produto produto = repository.findById(id).get();
+        produto.setCategoria(produtoAlterado.getCategoria());
+        produto.setCodigo(produtoAlterado.getCodigo());
+        produto.setTitulo(produtoAlterado.getTitulo());
+        produto.setDescricao(produtoAlterado.getDescricao());
+        produto.setValorUnitario(produtoAlterado.getValorUnitario());
+        produto.setTempoEntregaMinimo(produtoAlterado.getTempoEntregaMinimo());
+        produto.setTempoEntregaMaximo(produtoAlterado.getTempoEntregaMaximo());
+
+        repository.save(produto);
     }
 
     @Transactional
     public void delete(Long id) {
-        Produto produto = this.findById(id);
-        produto.setHabilitado(false); 
+
+        Produto produto = repository.findById(id).get();
+        produto.setHabilitado(Boolean.FALSE);
+
         repository.save(produto);
     }
+
 }
